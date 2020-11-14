@@ -1,0 +1,11 @@
+C:\Users\edubi\OneDrive - Estudiantes ITCR\Cuarto Semestre\Lenguajes de programación\Proyectos\Proyecto 3\ProyectoCsharpProlog\ConexionProlog\ConexionProlog\bin\Debug\ConexionProlog.exe.config
+C:\Users\edubi\OneDrive - Estudiantes ITCR\Cuarto Semestre\Lenguajes de programación\Proyectos\Proyecto 3\ProyectoCsharpProlog\ConexionProlog\ConexionProlog\bin\Debug\ConexionProlog.exe
+C:\Users\edubi\OneDrive - Estudiantes ITCR\Cuarto Semestre\Lenguajes de programación\Proyectos\Proyecto 3\ProyectoCsharpProlog\ConexionProlog\ConexionProlog\bin\Debug\ConexionProlog.pdb
+C:\Users\edubi\OneDrive - Estudiantes ITCR\Cuarto Semestre\Lenguajes de programación\Proyectos\Proyecto 3\ProyectoCsharpProlog\ConexionProlog\ConexionProlog\obj\Debug\ConexionProlog.csprojAssemblyReference.cache
+C:\Users\edubi\OneDrive - Estudiantes ITCR\Cuarto Semestre\Lenguajes de programación\Proyectos\Proyecto 3\ProyectoCsharpProlog\ConexionProlog\ConexionProlog\obj\Debug\ConexionProlog.Properties.Resources.resources
+C:\Users\edubi\OneDrive - Estudiantes ITCR\Cuarto Semestre\Lenguajes de programación\Proyectos\Proyecto 3\ProyectoCsharpProlog\ConexionProlog\ConexionProlog\obj\Debug\ConexionProlog.csproj.GenerateResource.cache
+C:\Users\edubi\OneDrive - Estudiantes ITCR\Cuarto Semestre\Lenguajes de programación\Proyectos\Proyecto 3\ProyectoCsharpProlog\ConexionProlog\ConexionProlog\obj\Debug\ConexionProlog.csproj.CoreCompileInputs.cache
+C:\Users\edubi\OneDrive - Estudiantes ITCR\Cuarto Semestre\Lenguajes de programación\Proyectos\Proyecto 3\ProyectoCsharpProlog\ConexionProlog\ConexionProlog\obj\Debug\ConexionProlog.exe
+C:\Users\edubi\OneDrive - Estudiantes ITCR\Cuarto Semestre\Lenguajes de programación\Proyectos\Proyecto 3\ProyectoCsharpProlog\ConexionProlog\ConexionProlog\obj\Debug\ConexionProlog.pdb
+C:\Users\edubi\OneDrive - Estudiantes ITCR\Cuarto Semestre\Lenguajes de programación\Proyectos\Proyecto 3\ProyectoCsharpProlog\ConexionProlog\ConexionProlog\obj\Debug\ConexionProlog.Principal.resources
+C:\Users\edubi\OneDrive - Estudiantes ITCR\Cuarto Semestre\Lenguajes de programación\Proyectos\Proyecto 3\ProyectoCsharpProlog\ConexionProlog\ConexionProlog\obj\Debug\ConexionProlog.csproj.CopyComplete
