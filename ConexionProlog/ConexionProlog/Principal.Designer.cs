@@ -37,6 +37,7 @@ namespace ConexionProlog
             this.btnConsultas = new System.Windows.Forms.Button();
             this.btnRandom = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.clean = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.tabla)).BeginInit();
             this.SuspendLayout();
             // 
@@ -80,7 +81,7 @@ namespace ConexionProlog
             // 
             // btnConsultas
             // 
-            this.btnConsultas.Location = new System.Drawing.Point(16, 278);
+            this.btnConsultas.Location = new System.Drawing.Point(16, 321);
             this.btnConsultas.Name = "btnConsultas";
             this.btnConsultas.Size = new System.Drawing.Size(222, 39);
             this.btnConsultas.TabIndex = 5;
@@ -90,7 +91,7 @@ namespace ConexionProlog
             // 
             // btnRandom
             // 
-            this.btnRandom.Location = new System.Drawing.Point(16, 232);
+            this.btnRandom.Location = new System.Drawing.Point(16, 275);
             this.btnRandom.Name = "btnRandom";
             this.btnRandom.Size = new System.Drawing.Size(222, 40);
             this.btnRandom.TabIndex = 6;
@@ -108,11 +109,22 @@ namespace ConexionProlog
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click_1);
             // 
+            // clean
+            // 
+            this.clean.Location = new System.Drawing.Point(16, 232);
+            this.clean.Name = "clean";
+            this.clean.Size = new System.Drawing.Size(222, 37);
+            this.clean.TabIndex = 8;
+            this.clean.Text = "Limpiar matriz";
+            this.clean.UseVisualStyleBackColor = true;
+            this.clean.Click += new System.EventHandler(this.clean_Click);
+            // 
             // Principal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1456, 774);
+            this.Controls.Add(this.clean);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.btnRandom);
             this.Controls.Add(this.btnConsultas);
@@ -139,6 +151,7 @@ namespace ConexionProlog
         private System.Windows.Forms.Button btnConsultas;
         private System.Windows.Forms.Button btnRandom;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button clean;
     }
 }
 
