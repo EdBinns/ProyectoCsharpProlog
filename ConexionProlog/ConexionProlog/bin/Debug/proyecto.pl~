@@ -2,10 +2,49 @@
 
 
 
+%5start :- dynamic(punto/2),
+  %       consult('bdp.pl').
+
+%consulta(X,Y):-
+	%dynamic(punto/2),
+	%consult('bdp.pl'),
+	%punto(X,Y)
+
+encontrargrupo(X,Y,[],_) :-
+	alapar(X,Y).
+encontrargrupo(X,Y,[Z|L],V) :-
+    alapar(X,Z),
+    not(member(Z,V)),
+    encontrargrupo(Z,Y,L,[Z|V]).
+
+alapar([X,Y],[Z,W]):-
+	dynamic(punto/2),
+	consult('C:\\Users\\edubi\\OneDrive - Estudiantes ITCR\\Cuarto Semestre\\Lenguajes de programación\\Proyectos\\Proyecto 3\\ProyectoCsharpProlog\\ConexionProlog\\ConexionProlog\\bin\\Debug\\bdp.pl'),
+	punto(X,Y),
+	punto(Z,W),
+	A is Z + 1,
+	B is Z - 1,
+	C is W - 1,
+	D is W + 1,
+	(
+	  (X = Z , Y = D); (X = Z, Y = C);
+	  (X = A ,Y = W); (X = B, Y = W)
+	).
 
 
-start :- dynamic(punto/2),
-         consult('prueba.pl').
+grupo(X,S):-
+	findall(Y,encontrargrupo(X,Y,_,[]),L),
+	sort(L,S).
 
-%%guardar_punto(X,Y):-
-%%	assert(punto(X,Y)).
+prueba([],[]).
+prueba([H1|T1],[[Y]|X]):-
+	prueba(T1,X),
+	flatten2(H1,Y).
+
+flatten2([], []) :- !.
+flatten2([L|Ls], FlatL) :-
+    !,
+    flatten2(L, NewL),
+    flatten2(Ls, NewLs),
+    append(NewL, NewLs, FlatL).
+flatten2(L, [L]).

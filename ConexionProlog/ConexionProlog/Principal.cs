@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -22,7 +23,6 @@ namespace ConexionProlog
 			InitializeComponent();
 			this.CenterToScreen();
 			this.Text = "Proyecto C# conectado con Prolog";
-			addPoint(":- dynamic punto/2");
 			
 		}
 
@@ -77,8 +77,18 @@ namespace ConexionProlog
 		  
 		   if (flag == true)
 		    {
-				cell.Style.BackColor = System.Drawing.Color.Red;
-		    }
+				if (cell.Value == "O")
+                {
+					String x = e.ColumnIndex.ToString();
+					String y = e.RowIndex.ToString();
+					foundGroup(x, y);
+					MessageBox.Show("Usted esta en la posición x =" + x + " y = " + y);
+				}
+				else
+				{
+					MessageBox.Show("Usted esta en la posición x =" + e.ColumnIndex.ToString() + " y = " + e.RowIndex.ToString());
+				}
+			}
 		   else
 			{
 				if (cell.Value == "O")
@@ -89,7 +99,7 @@ namespace ConexionProlog
 				{
 					String x = e.ColumnIndex.ToString();
 					String y = e.RowIndex.ToString();
-					String z = "punto(" + x.ToString() + "," + y.ToString() + ")";
+					String z = "punto(" + x.ToString() + "," + y.ToString() + ").";
 					addPoint(z);
 					cell.Value = "O";
 				}
@@ -104,24 +114,11 @@ namespace ConexionProlog
         private void button2_Click(object sender, EventArgs e)
         {
 
-
-			/*
-			 * PlQuery consulta = new PlQuery("punto(4,X).");
-			foreach (PlQueryVariables z in consulta.SolutionVariables)
-			{
-				Console.WriteLine(z["X"].ToString());
-			}
-
-			 * 
-			 */
-
-			startProlog();
+			
 		}
 
         private void btnRandom_Click(object sender, EventArgs e)
         {
-
-			flag = true;
 			Random rnd = new Random();
 			int totalValues = rnd.Next(0, tamannoMatriz*tamannoMatriz);
 
@@ -131,7 +128,7 @@ namespace ConexionProlog
 				int colums = rnd.Next(0, tamannoMatriz);
 				int rows = rnd.Next(0, tamannoMatriz);
 				dataTable.Rows[colums][rows] = "O";
-				String z = "punto(" + colums.ToString() + "," + rows.ToString() + ")";
+				String z = "punto(" + colums.ToString() + "," + rows.ToString() + ").";
 				addPoint(z);
 			}		
 		}
@@ -142,14 +139,7 @@ namespace ConexionProlog
 
         }
 
-		private void guardarPunto(String x, String y)
-        {
-			/*PlQuery consulta = new PlQuery("guardar_punto("+x+"," +y+").");
-			consulta.NextSolution();
-			consulta.Dispose();
-			 */
-
-		}
+	
 
 		private void listing()
         {
@@ -177,7 +167,7 @@ namespace ConexionProlog
 		private void deleteFile()
         {
 			File.Delete("C:\\Users\\edubi\\OneDrive - Estudiantes ITCR\\Cuarto Semestre\\Lenguajes de programación\\Proyectos\\Proyecto 3\\ProyectoCsharpProlog\\ConexionProlog\\ConexionProlog\\bin\\Debug\\bdp.pl");
-			addPoint(":- dynamic punto/2");
+			addPoint(":- dynamic punto/2.");
 		}
 
         private void clean_Click(object sender, EventArgs e)
@@ -193,9 +183,66 @@ namespace ConexionProlog
 				for (int j = 0; j < tamannoMatriz; j++)
 				{
 					dataTable.Rows[i][j] = " ";
-					tabla.Rows[j].Cells[j].Style.BackColor = System.Drawing.Color.White;	
 				}
 			}
 		}
-    }
+
+        private void btnConsult_Click(object sender, EventArgs e)
+        {
+			PlQuery consulta = new PlQuery("grupo([0,9],L).");
+			String xd = " ";
+			  foreach (PlQueryVariables z in consulta.SolutionVariables)
+			{
+				Console.WriteLine("X = " + z["L"].ToString());
+				xd = z["L"].ToString();
+				break;
+			}	 
+
+			Console.WriteLine(consulta.NextSolution());
+			consulta.Dispose();
+			List<string> f = new List<string>(xd.Split(','));
+
+			Console.WriteLine(xd.Length);
+			Console.WriteLine(f[1]);
+		}
+
+
+		private void foundGroup(String X, String Y)
+		{
+			/**
+			 * 
+			 * PlQuery consulta = new PlQuery("grupos(X,"+Y+").");
+			foreach (PlQueryVariables z in consulta.SolutionVariables)
+			{
+				Console.WriteLine("Conectados con y");
+				Console.WriteLine("X = " + z["X"].ToString() + " Y = " + Y);
+			}
+			Console.WriteLine(consulta.NextSolution());
+			consulta.Dispose();
+
+			consulta = new PlQuery("grupos(" + X+",Y).");
+			foreach (PlQueryVariables z in consulta.SolutionVariables)
+			{
+				Console.WriteLine("Conectados con X");
+				Console.WriteLine("X = " + X + " Y = " + z["Y"].ToString());
+			}
+			Console.WriteLine(consulta.NextSolution());
+			consulta.Dispose();
+			 
+			*/
+
+			ArrayList al = new ArrayList();
+			PlQuery consulta = new PlQuery("grupo([" + X+","+ Y+"],L).");
+
+			foreach (PlQueryVariables z in consulta.SolutionVariables)
+			{
+				Console.WriteLine("X = " + z["L"].ToString());
+				
+			}
+
+			Console.WriteLine(consulta.NextSolution());
+			consulta.Dispose();
+
+		}
+	}
 }

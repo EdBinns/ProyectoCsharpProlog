@@ -34,10 +34,10 @@ namespace ConexionProlog
             this.tabla = new System.Windows.Forms.DataGridView();
             this.label1 = new System.Windows.Forms.Label();
             this.tbMatriz = new System.Windows.Forms.TextBox();
-            this.btnConsultas = new System.Windows.Forms.Button();
             this.btnRandom = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.clean = new System.Windows.Forms.Button();
+            this.btnConsult = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.tabla)).BeginInit();
             this.SuspendLayout();
             // 
@@ -79,19 +79,9 @@ namespace ConexionProlog
             this.tbMatriz.TabIndex = 4;
             this.tbMatriz.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
-            // btnConsultas
-            // 
-            this.btnConsultas.Location = new System.Drawing.Point(16, 321);
-            this.btnConsultas.Name = "btnConsultas";
-            this.btnConsultas.Size = new System.Drawing.Size(222, 39);
-            this.btnConsultas.TabIndex = 5;
-            this.btnConsultas.Text = "Consultas";
-            this.btnConsultas.UseVisualStyleBackColor = true;
-            this.btnConsultas.Click += new System.EventHandler(this.button2_Click);
-            // 
             // btnRandom
             // 
-            this.btnRandom.Location = new System.Drawing.Point(16, 275);
+            this.btnRandom.Location = new System.Drawing.Point(16, 232);
             this.btnRandom.Name = "btnRandom";
             this.btnRandom.Size = new System.Drawing.Size(222, 40);
             this.btnRandom.TabIndex = 6;
@@ -101,17 +91,17 @@ namespace ConexionProlog
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(16, 189);
+            this.button2.Location = new System.Drawing.Point(16, 278);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(222, 37);
             this.button2.TabIndex = 7;
-            this.button2.Text = "Fin llenado manual";
+            this.button2.Text = "Iniciar actividad";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click_1);
             // 
             // clean
             // 
-            this.clean.Location = new System.Drawing.Point(16, 232);
+            this.clean.Location = new System.Drawing.Point(16, 189);
             this.clean.Name = "clean";
             this.clean.Size = new System.Drawing.Size(222, 37);
             this.clean.TabIndex = 8;
@@ -119,15 +109,25 @@ namespace ConexionProlog
             this.clean.UseVisualStyleBackColor = true;
             this.clean.Click += new System.EventHandler(this.clean_Click);
             // 
+            // btnConsult
+            // 
+            this.btnConsult.Location = new System.Drawing.Point(16, 321);
+            this.btnConsult.Name = "btnConsult";
+            this.btnConsult.Size = new System.Drawing.Size(222, 32);
+            this.btnConsult.TabIndex = 9;
+            this.btnConsult.Text = "Consultas";
+            this.btnConsult.UseVisualStyleBackColor = true;
+            this.btnConsult.Click += new System.EventHandler(this.btnConsult_Click);
+            // 
             // Principal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1456, 774);
+            this.Controls.Add(this.btnConsult);
             this.Controls.Add(this.clean);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.btnRandom);
-            this.Controls.Add(this.btnConsultas);
             this.Controls.Add(this.tbMatriz);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.tabla);
@@ -148,10 +148,10 @@ namespace ConexionProlog
         private System.Windows.Forms.DataGridView tabla;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox tbMatriz;
-        private System.Windows.Forms.Button btnConsultas;
         private System.Windows.Forms.Button btnRandom;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button clean;
+        private System.Windows.Forms.Button btnConsult;
     }
 }
 
