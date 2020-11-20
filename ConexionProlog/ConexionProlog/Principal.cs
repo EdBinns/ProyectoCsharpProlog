@@ -81,8 +81,15 @@ namespace ConexionProlog
                 {
 					String x = e.ColumnIndex.ToString();
 					String y = e.RowIndex.ToString();
-					foundGroup(x, y);
+					List<List<int>> list = foundGroup(x, y);
 					MessageBox.Show("Usted esta en la posición x =" + x + " y = " + y);
+
+					foreach(List<int> subList in list)
+                    {
+						DataGridViewCell color = (DataGridViewCell)tabla.Rows[subList[1]].Cells[subList[0]];
+						color.Style.BackColor = System.Drawing.Color.Coral;
+                    }
+
 				}
 				else
 				{
@@ -127,7 +134,7 @@ namespace ConexionProlog
 			{
 				int colums = rnd.Next(0, tamannoMatriz);
 				int rows = rnd.Next(0, tamannoMatriz);
-				dataTable.Rows[colums][rows] = "O";
+				dataTable.Rows[rows][colums] = "O";
 				String z = "punto(" + colums.ToString() + "," + rows.ToString() + ").";
 				addPoint(z);
 			}		
@@ -185,64 +192,92 @@ namespace ConexionProlog
 					dataTable.Rows[i][j] = " ";
 				}
 			}
+			tabla.DataSource = null;
+			tabla.Rows.Clear();
+			tabla.DataSource = dataTable;
 		}
 
         private void btnConsult_Click(object sender, EventArgs e)
         {
-			PlQuery consulta = new PlQuery("grupo([0,9],L).");
-			String xd = " ";
+			PlQuery consulta = new PlQuery("grupo([1,4],L).");
+			String stringConsult = " ";
 			  foreach (PlQueryVariables z in consulta.SolutionVariables)
 			{
 				Console.WriteLine("X = " + z["L"].ToString());
-				xd = z["L"].ToString();
+				stringConsult = z["L"].ToString();
 				break;
 			}	 
 
 			Console.WriteLine(consulta.NextSolution());
 			consulta.Dispose();
-			List<string> f = new List<string>(xd.Split(','));
 
-			Console.WriteLine(xd.Length);
-			Console.WriteLine(f[1]);
+	
+            stringConsult = stringConsult.Replace("],[", "].[");
+			stringConsult = stringConsult.Replace("[[", "[");
+			stringConsult = stringConsult.Replace("]]", "");
+			List<string> listConsult = new List<string>(stringConsult.Split('.'));
+			List<string> sublista;
+			List<List<int>> listOfPoint  = new List<List<int>>();
+			foreach (String i in listConsult)
+			{
+				String temp = i;
+				temp = temp.Replace("[", "");
+				temp = temp.Replace("]", "");
+				sublista= new List<string>(temp.Split(','));
+				List<int> subListOfPoint = new List<int>();
+				foreach (String j in sublista)
+                {
+					int n = Convert.ToInt32(j);
+					subListOfPoint.Add(n);
+					Console.WriteLine(j);
+                }
+				Console.WriteLine("========");
+				listOfPoint.Add(subListOfPoint);
+			}
+			
 		}
 
 
-		private void foundGroup(String X, String Y)
+		private  List<List<int>> foundGroup(String X, String Y)
 		{
-			/**
-			 * 
-			 * PlQuery consulta = new PlQuery("grupos(X,"+Y+").");
-			foreach (PlQueryVariables z in consulta.SolutionVariables)
-			{
-				Console.WriteLine("Conectados con y");
-				Console.WriteLine("X = " + z["X"].ToString() + " Y = " + Y);
-			}
-			Console.WriteLine(consulta.NextSolution());
-			consulta.Dispose();
-
-			consulta = new PlQuery("grupos(" + X+",Y).");
-			foreach (PlQueryVariables z in consulta.SolutionVariables)
-			{
-				Console.WriteLine("Conectados con X");
-				Console.WriteLine("X = " + X + " Y = " + z["Y"].ToString());
-			}
-			Console.WriteLine(consulta.NextSolution());
-			consulta.Dispose();
-			 
-			*/
-
-			ArrayList al = new ArrayList();
+			
+			
 			PlQuery consulta = new PlQuery("grupo([" + X+","+ Y+"],L).");
 
-			foreach (PlQueryVariables z in consulta.SolutionVariables)
+			String stringConsult = " ";
+			foreach (PlQueryVariables query in consulta.SolutionVariables)
 			{
-				Console.WriteLine("X = " + z["L"].ToString());
-				
+				Console.WriteLine("X = " + query["L"].ToString());
+				stringConsult = query["L"].ToString();
+				break;
 			}
 
 			Console.WriteLine(consulta.NextSolution());
 			consulta.Dispose();
 
+			stringConsult = stringConsult.Replace("],[", "].[");
+			stringConsult = stringConsult.Replace("[[", "[");
+			stringConsult = stringConsult.Replace("]]", "");
+			List<string> listConsult = new List<string>(stringConsult.Split('.'));
+			List<string> sublista;
+			List<List<int>> listOfPoint = new List<List<int>>();
+			foreach (String i in listConsult)
+			{
+				String temp = i;
+				temp = temp.Replace("[", "");
+				temp = temp.Replace("]", "");
+				sublista = new List<string>(temp.Split(','));
+				List<int> subListOfPoint = new List<int>();
+				foreach (String j in sublista)
+				{
+					int n = Convert.ToInt32(j);
+					subListOfPoint.Add(n);
+					Console.WriteLine(j);
+				}
+				Console.WriteLine("========");
+				listOfPoint.Add(subListOfPoint);
+			}
+			return listOfPoint;
 		}
 	}
 }

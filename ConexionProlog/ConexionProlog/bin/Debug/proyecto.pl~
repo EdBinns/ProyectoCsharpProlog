@@ -34,17 +34,6 @@ alapar([X,Y],[Z,W]):-
 
 grupo(X,S):-
 	findall(Y,encontrargrupo(X,Y,_,[]),L),
-	sort(L,S).
+	append(X,L,N),
+	sort(N,S).
 
-prueba([],[]).
-prueba([H1|T1],[[Y]|X]):-
-	prueba(T1,X),
-	flatten2(H1,Y).
-
-flatten2([], []) :- !.
-flatten2([L|Ls], FlatL) :-
-    !,
-    flatten2(L, NewL),
-    flatten2(Ls, NewLs),
-    append(NewL, NewLs, FlatL).
-flatten2(L, [L]).
