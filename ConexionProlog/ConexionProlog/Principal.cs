@@ -83,7 +83,8 @@ namespace ConexionProlog
 					String x = e.ColumnIndex.ToString();
 					String y = e.RowIndex.ToString();
 					int n = seeLenghtGroup(x,y);
-					List<List<int>> list = foundGroup(x, y);
+					String consult = consultGroup(x, y);
+					List<List<int>> list = makeAList(consult);
 					MessageBox.Show("Usted esta en la posición x =" + x + " y = " + y + ", y el tamaño de ese grupo es de " + n.ToString());
 					Random random = new Random();
 					int r = random.Next(0, 256);
@@ -208,16 +209,25 @@ namespace ConexionProlog
             if (flag)
             {
 				List<List<List<int>>> listOfGroup = new List<List<List<int>>>();
+
+				List<String> listStrings = new List<String>();
 				for (int i = 0; i < tamannoMatriz; i++)
 				{
 					for (int j = 0; j < tamannoMatriz; j++)
 					{
 						if(tabla.Rows[j].Cells[i].Value == "O")
                         {
-							List<List<int>> group = foundGroup(i.ToString(), j.ToString());
-							if ((group != null) && (!listOfGroup.Contains(group)))
+							String group = consultGroup(i.ToString(), j.ToString());
+							if ((group != null))
 							{
-								listOfGroup.Add(group);
+
+                                if (!listStrings.Contains(group))
+                                {
+									listStrings.Add(group);
+									List<List<int>> newgroup = makeAList(group);
+									listOfGroup.Add(newgroup);
+                                }
+										
 							}
 						}
 					}
@@ -240,29 +250,36 @@ namespace ConexionProlog
 		}
 
 
-		private  List<List<int>> foundGroup(String X, String Y)
-		{
-			
-			
-			PlQuery consulta = new PlQuery("grupo([" + X+","+ Y+"],L).");
+		private String consultGroup(String X, String Y)
+        {
+			PlQuery consulta = new PlQuery("grupo([" + X + "," + Y + "],L).");
 
 			String stringConsult = " ";
 			foreach (PlQueryVariables query in consulta.SolutionVariables)
 			{
 				stringConsult = query["L"].ToString();
 			}
-		
-		
+
+
 			consulta.Dispose();
-			List<List<int>> listOfPoint = new List<List<int>>();
-			if (consulta.NextSolution())
+            if (consulta.NextSolution())
             {
+				return stringConsult;
+
+			}
+			return null;
+        }
+		private List<List<int>> makeAList(String stringConsult)
+        {
+			List<List<int>> listOfPoint = new List<List<int>>();
+			if (stringConsult != null )
+			{
 				stringConsult = stringConsult.Replace("],[", "].[");
 				stringConsult = stringConsult.Replace("[[", "");
 				stringConsult = stringConsult.Replace("]]", "");
 				List<string> listConsult = new List<string>(stringConsult.Split('.'));
 				List<string> sublista;
-				
+
 				foreach (String i in listConsult)
 				{
 					String temp = i;
@@ -275,12 +292,14 @@ namespace ConexionProlog
 						int n = Convert.ToInt32(j);
 						subListOfPoint.Add(n);
 					}
-				    listOfPoint.Add(subListOfPoint);
+					listOfPoint.Add(subListOfPoint);
 				}
 				return listOfPoint;
-			}			
+			}
 			return null;
-		}
+        }
+
+		
 
 		private int seeLenghtGroup(String X, String Y)
         {
