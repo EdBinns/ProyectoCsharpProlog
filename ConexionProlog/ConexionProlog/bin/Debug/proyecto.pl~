@@ -33,7 +33,6 @@ alapar([X,Y],[Z,W]):-
 
 
 grupo(X,S):-
-	 verpunto(X),
 	findall(Y,encontrargrupo(X,Y,_,[]),L),
 	append([X],L,N),
 	sort(N,S).
