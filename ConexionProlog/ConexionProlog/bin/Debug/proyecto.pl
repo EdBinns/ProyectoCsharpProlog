@@ -34,6 +34,18 @@ alapar([X,Y],[Z,W]):-
 
 grupo(X,S):-
 	findall(Y,encontrargrupo(X,Y,_,[]),L),
+		 verpunto(X),
+
 	append([X],L,N),
 	sort(N,S).
 
+verpunto([H,T]):-
+	punto(H,T).
+tamanogrupo(X,N):-
+	grupo(X,L),
+	tamano(N,L).
+
+tamano(0,[]).
+tamano(N,[_|T]):-
+	tamano(R,T),
+	N is R +1.

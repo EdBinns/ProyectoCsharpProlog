@@ -91,12 +91,13 @@ namespace ConexionProlog
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(16, 278);
+            this.button2.BackColor = System.Drawing.SystemColors.HotTrack;
+            this.button2.Location = new System.Drawing.Point(16, 330);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(222, 37);
-            this.button2.TabIndex = 7;
+            this.button2.Size = new System.Drawing.Size(222, 62);
+            this.button2.TabIndex = 10;
             this.button2.Text = "Iniciar actividad";
-            this.button2.UseVisualStyleBackColor = true;
+            this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.button2_Click_1);
             // 
             // clean
@@ -111,11 +112,11 @@ namespace ConexionProlog
             // 
             // btnConsult
             // 
-            this.btnConsult.Location = new System.Drawing.Point(16, 321);
+            this.btnConsult.Location = new System.Drawing.Point(16, 278);
             this.btnConsult.Name = "btnConsult";
             this.btnConsult.Size = new System.Drawing.Size(222, 32);
             this.btnConsult.TabIndex = 9;
-            this.btnConsult.Text = "Consultas";
+            this.btnConsult.Text = "Encontrar todos los grupos";
             this.btnConsult.UseVisualStyleBackColor = true;
             this.btnConsult.Click += new System.EventHandler(this.btnConsult_Click);
             // 
