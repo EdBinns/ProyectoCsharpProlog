@@ -38,9 +38,6 @@ namespace ConexionProlog
             this.button2 = new System.Windows.Forms.Button();
             this.clean = new System.Windows.Forms.Button();
             this.btnConsult = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
-            this.tbSearch = new System.Windows.Forms.TextBox();
-            this.btnSearch = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.tabla)).BeginInit();
             this.SuspendLayout();
             // 
@@ -117,48 +114,20 @@ namespace ConexionProlog
             // 
             // btnConsult
             // 
-            this.btnConsult.Location = new System.Drawing.Point(16, 278);
+            this.btnConsult.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.btnConsult.Location = new System.Drawing.Point(16, 370);
             this.btnConsult.Name = "btnConsult";
             this.btnConsult.Size = new System.Drawing.Size(222, 32);
             this.btnConsult.TabIndex = 9;
             this.btnConsult.Text = "Encontrar todos los grupos";
-            this.btnConsult.UseVisualStyleBackColor = true;
+            this.btnConsult.UseVisualStyleBackColor = false;
             this.btnConsult.Click += new System.EventHandler(this.btnConsult_Click);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(26, 430);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(201, 20);
-            this.label2.TabIndex = 11;
-            this.label2.Text = "Buscar grupos por tamaño:";
-            // 
-            // tbSearch
-            // 
-            this.tbSearch.Location = new System.Drawing.Point(16, 454);
-            this.tbSearch.Name = "tbSearch";
-            this.tbSearch.Size = new System.Drawing.Size(211, 26);
-            this.tbSearch.TabIndex = 12;
-            // 
-            // btnSearch
-            // 
-            this.btnSearch.Location = new System.Drawing.Point(16, 486);
-            this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(201, 33);
-            this.btnSearch.TabIndex = 13;
-            this.btnSearch.Text = "Buscar";
-            this.btnSearch.UseVisualStyleBackColor = true;
-            this.btnSearch.Click += new System.EventHandler(this.button3_Click);
             // 
             // Principal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1521, 765);
-            this.Controls.Add(this.btnSearch);
-            this.Controls.Add(this.tbSearch);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.btnConsult);
             this.Controls.Add(this.clean);
             this.Controls.Add(this.button2);
@@ -187,9 +156,6 @@ namespace ConexionProlog
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button clean;
         private System.Windows.Forms.Button btnConsult;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox tbSearch;
-        private System.Windows.Forms.Button btnSearch;
     }
 }
 

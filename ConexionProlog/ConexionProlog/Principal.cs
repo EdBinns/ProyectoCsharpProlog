@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using SbsSW.SwiPlCs;
 
@@ -20,6 +21,7 @@ namespace ConexionProlog
             this.Text = "Proyecto C# conectado con Prolog";
 
         }
+
 
         private void Principal_Load(object sender, EventArgs e)
         {
@@ -42,6 +44,15 @@ namespace ConexionProlog
 
         }
 
+        ///<summary>
+        ///Inicializa la matriz según el número ingresado por el usuario
+        ///</summary>
+        ///<param name="e">
+        ///Detecta los eventos del boton
+        ///</param>
+        ///  ///<param name="sender">
+        ///Detecta los eventos del boton
+        ///</param>
         private void button1_Click(object sender, EventArgs e)
         {
             deleteFile();
@@ -49,17 +60,20 @@ namespace ConexionProlog
             dataTable.Columns.Clear();
 
             flag = false;
+            btnRandom.Enabled = true;
+            //Se rellena las columnas de la matriz
             tamannoMatriz = int.Parse(tbMatriz.Text.ToString());
             for (int i = 0; i < tamannoMatriz; i++)
             {
                 dataTable.Columns.Add();
             }
 
+            //Se rellena las filas de la matriz
             for (int i = 0; i < tamannoMatriz; i++)
             {
                 dataTable.Rows.Add();
             }
-
+            //Se define un tamaño a las celdas de la matriz
             tabla.DataSource = dataTable;
             foreach (DataGridViewColumn column in tabla.Columns)
             {
@@ -77,20 +91,31 @@ namespace ConexionProlog
         {
 
         }
+
+        ///<summary>
+        ///Detecta el click en una celda de la matriz
+        ///</summary>
+        ///<param name="sender">
+        ///Detecta el evento del click
+        ///</param>
+        ///  ///<param name="e">
+        ///Detecta el evento del click
+        ///</param>
         private void listenerrDataGridViewOnClick(object sender, DataGridViewCellEventArgs e)
         {
             DataGridViewCell cell = (DataGridViewCell)tabla.Rows[e.RowIndex].Cells[e.ColumnIndex];
 
-            if (flag == true)
+            
+            if (flag)
             {
                 if (cell.Value == "O")
                 {
+                    ///Se detecta el click en el simbolo y se procede a pintar su grupo
                     String x = e.ColumnIndex.ToString();
                     String y = e.RowIndex.ToString();
                     int n = seeLenghtGroup(x, y);
                     String consult = consultGroup(x, y);
                     List<List<int>> list = makeAList(consult);
-                    MessageBox.Show("Usted esta en la posición x =" + x + " y = " + y + ", y el tamaño de ese grupo es de " + n.ToString());
                     Random random = new Random();
                     int r = random.Next(0, 256);
                     int g = random.Next(0, 256);
@@ -101,6 +126,7 @@ namespace ConexionProlog
                         color.Style.BackColor = System.Drawing.Color.FromArgb(r, g, b);
                     }
                     tabla.ClearSelection();
+                    MessageBox.Show("Usted esta en la posición x =" + x + " y = " + y + "\n El tamaño del grupo a donde se encuentra es de: " + n.ToString());
 
                 }
                 else
@@ -118,10 +144,13 @@ namespace ConexionProlog
                 }
                 else
                 {
+
+                    //Se procede a pintar el O en la celda seleccionada
                     String x = e.ColumnIndex.ToString();
                     String y = e.RowIndex.ToString();
                     String z = "punto(" + x.ToString() + "," + y.ToString() + ").";
                     addPoint(z);
+                    MessageBox.Show("Añadio un punto en la posición x =" + e.ColumnIndex.ToString() + " y = " + e.RowIndex.ToString());
                     cell.Value = "O";
                     tabla.ClearSelection();
                 }
@@ -132,11 +161,20 @@ namespace ConexionProlog
         {
 
         }
-
+        ///<summary>
+        ///Rellena la matriz de forma automatica
+        ///</summary>
+        ///<param name="e">
+        ///Detecta los eventos del boton
+        ///</param>
+        ///  ///<param name="sender">
+        ///Detecta los eventos del boton
+        ///</param>
         private void btnRandom_Click(object sender, EventArgs e)
         {
             if (!flag)
             {
+               
                 Random rnd = new Random();
                 int totalValues = rnd.Next(0, tamannoMatriz * tamannoMatriz);
 
@@ -152,31 +190,30 @@ namespace ConexionProlog
             }
 
         }
-
+        ///<summary>
+        ///Detecta cuando el usuario ha iniciado la actividad
+        ///</summary>
+        ///<param name="e">
+        ///Detecta los eventos del boton
+        ///</param>
+        ///  ///<param name="sender">
+        ///Detecta los eventos del boton
+        ///</param>
         private void button2_Click_1(object sender, EventArgs e)
         {
             flag = true;
+            btnRandom.Enabled = false;
             MessageBox.Show("La actividad ha iniciado");
 
         }
 
 
-
-        private void listing()
-        {
-            PlQuery consulta = new PlQuery("listing(X).");
-            foreach (PlQueryVariables z in consulta.SolutionVariables)
-            {
-                Console.WriteLine(z["X"].ToString());
-            }
-
-        }
-        private void startProlog()
-        {
-            PlQuery consulta = new PlQuery("start.");
-            Console.WriteLine(consulta.NextSolution());
-        }
-
+        ///<summary>
+        ///Agrega el punto seleccionado por el usuario para proceder agregarlo a la base de datos
+        ///</summary>
+        ///<param name="consult">
+        ///String que contiene el punto por agregar a la base de datos
+        ///</param>
         private void addPoint(String consult)
         {
             using (StreamWriter outputFile = new StreamWriter("C:\\Users\\edubi\\OneDrive - Estudiantes ITCR\\Cuarto Semestre\\Lenguajes de programación\\Proyectos\\Proyecto 3\\ProyectoCsharpProlog\\ConexionProlog\\ConexionProlog\\bin\\Debug\\bdp.pl", true))
@@ -185,22 +222,38 @@ namespace ConexionProlog
             }
         }
 
+        ///<summary>
+        ///Procede a eliminar de memoria todos los puntos que hayan estado guardados en la base de datos
+        ///</summary>
         private void deleteFile()
         {
             File.Delete("C:\\Users\\edubi\\OneDrive - Estudiantes ITCR\\Cuarto Semestre\\Lenguajes de programación\\Proyectos\\Proyecto 3\\ProyectoCsharpProlog\\ConexionProlog\\ConexionProlog\\bin\\Debug\\bdp.pl");
             addPoint(":- dynamic punto/2.");
         }
 
+
+        ///<summary>
+        ///Detecta cuando un usuario quiere limpiar la matriz
+        ///</summary>
+        ///<param name="e">
+        ///Detecta los eventos del boton
+        ///</param>
+        ///  ///<param name="sender">
+        ///Detecta los eventos del boton
+        ///</param>
         private void clean_Click(object sender, EventArgs e)
         {
             flag = false;
-            cleanMatriz();
-            deleteFile();
-           
+            cleanMatriz();    
         }
 
+
+        ///<summary>
+        ///Se encarga de ir limpiando la matriz celda por celda
+        ///</summary>
         private void cleanMatriz()
         {
+            btnRandom.Enabled = true;
             deleteFile();
             for (int i = 0; i < tamannoMatriz; i++)
             {
@@ -223,12 +276,26 @@ namespace ConexionProlog
             }
         }
 
+        ///<summary>
+        ///Detecta cuando un usuario quiere limpiar la matriz desea ver todos los grupos que se encuentran \
+        ///dentro de la matriz, estos se colorean y se manda un mensaje indicando sus tamaños
+        ///</summary>
+        ///<param name="e">
+        ///Detecta los eventos del boton
+        ///</param>
+        ///  ///<param name="sender">
+        ///Detecta los eventos del boton
+        ///</param>
         private void btnConsult_Click(object sender, EventArgs e)
         {
             if (flag)
             {
+                
+                ///listOfGroup contiene todos los grupos encontrados
                 List<List<List<int>>> listOfGroup = new List<List<List<int>>>();
 
+                ///listString va guardando los grupos en forma de strings para saber/
+                ///si ya se encuentran dentro de listOfGroup
                 List<String> listStrings = new List<String>();
                 for (int i = 0; i < tamannoMatriz; i++)
                 {
@@ -237,20 +304,16 @@ namespace ConexionProlog
                         if (tabla.Rows[j].Cells[i].Value == "O")
                         {
                             String group = consultGroup(i.ToString(), j.ToString());
-                            if ((group != null))
+                            if ((group != null) && (!listStrings.Contains(group)))
                             {
-                                if (!listStrings.Contains(group))
-                                {
-                                    listStrings.Add(group);
-                                    List<List<int>> newgroup = makeAList(group);
-                                    listOfGroup.Add(newgroup);
-                                }
+                                listStrings.Add(group);
+                                List<List<int>> newgroup = makeAList(group);
+                                listOfGroup.Add(newgroup);
                             }
                         }
                     }
                 }
-                listGlobal.Clear();
-                listGlobal = listOfGroup;
+                ///Se procede a pintar todos los grupos que se encontraron
                 Random random = new Random();
                 foreach (List<List<int>> list in listOfGroup)
                 {
@@ -263,39 +326,77 @@ namespace ConexionProlog
                         color.Style.BackColor = System.Drawing.Color.FromArgb(r, g, b);
                     }
                 }
-
-                String strSize = "" ;
+                ///Se prepara el mensaje para detectar cuantos grupos hay y sus tamaños
+                List<int> listSize = new List<int>();
                 foreach(List<List<int>> list in listOfGroup)
                 {
-                    strSize = strSize + list.Count + ",";
+                    listSize.Add(list.Count);
                 }
 
-                MessageBox.Show("El total de grupos en la matriz es de " + listOfGroup.Count.ToString() + ", y los grupos tienen tamaños de " + strSize);
+                var agrupar = listSize.GroupBy(i => i);
+
+                String message = "";
+                foreach (var grp in agrupar)
+                {
+                    message = message + "Hay " + grp.Count() + " grupos de " + grp.Key + " \n";
+                }
+
+                MessageBox.Show("El total de grupos en la matriz es de " + listOfGroup.Count.ToString() + "\nLos grupos estan distribuidos de la siguiente manera \n" + message);
                 tabla.ClearSelection();
             }
 
         }
 
+        ///<summary>
+        ///Realiza la conexión con prolog para poder ir a buscar el grupo que contiene 
+        ///el punto que llego por parametro
+        ///</summary>
+        ///<return>
+        ///Devuelve un string a donde se encuentra todo el grupo que se logro encontrar. en caso de que no /
+        ///encontrara nada, se devuelve un valor nulo
+        ///</return>
+        /// ///<param name="X">
+        ///Eje X del punto que llega
+        ///</param>
+        ///<param name="Y">
+        ///Eje Y del punto que llega
+        ///</param>
 
         private String consultGroup(String X, String Y)
         {
+
+            ///Se procede a realizar la conexión con prologón con prolog y se reliza la consulta
             PlQuery consulta = new PlQuery("grupo([" + X + "," + Y + "],L).");
 
+
+            ///Se recupera lo que devolvio la consulta en la incognita
             String stringConsult = " ";
             foreach (PlQueryVariables query in consulta.SolutionVariables)
             {
                 stringConsult = query["L"].ToString();
             }
 
-
+            ///Se verifica que haya sido exitosa la consulta y se devuelve su valor, en caso
+            ///contrario se devuelve null
             consulta.Dispose();
             if (consulta.NextSolution())
             {
                 return stringConsult;
-
             }
             return null;
         }
+
+        ///<summary>
+        /// Convierte el string de la consulta que se encontro en la conexión con prologón con prolog a una lista
+        /// De esta forma se vuelve más factible trabajar con los resultados
+        ///</summary>
+        ///<return>
+        ///Devuelve una lista que contiene un grupo de puntos, si el string no es nulo, en caso contrario
+        ///se procede a devolver null
+        ///</return>
+        /// ///<param name="stringConsult">
+        ///String que contiene el grupo de puntos
+        ///</param>
         private List<List<int>> makeAList(String stringConsult)
         {
             List<List<int>> listOfPoint = new List<List<int>>();
@@ -327,49 +428,36 @@ namespace ConexionProlog
         }
 
 
-
+        ///<summary>
+        ///Realiza la conexión con prologón con prolog para poder encontrar el tamaño de un grupo
+        ///</summary>
+        ///<return>
+        ///Devuelve el tamaño de un grupo
+        ///</return>
+        /// ///<param name="X">
+        ///Eje X del punto que llega
+        ///</param>
+        ///<param name="Y">
+        ///Eje Y del punto que llega
+        ///</param>
         private int seeLenghtGroup(String X, String Y)
         {
-
+            ///Se procede a realizar la conexión con prolog
             PlQuery consulta = new PlQuery("tamanogrupo([" + X + "," + Y + "],N).");
 
+
+            ///Se recupere el valor que devuelve la consulta
             String stringConsult = " ";
             foreach (PlQueryVariables query in consulta.SolutionVariables)
             {
                 stringConsult = query["N"].ToString();
             }
             consulta.Dispose();
+
+            ///Se devuelve en int el valor del string
             return Convert.ToInt32(stringConsult); ;
         }
 
-        private void button3_Click(object sender, EventArgs e)
-        {
-            int n = int.Parse(tbSearch.Text.ToString());
-            Random random = new Random();
-            foreach (List<List<int>> list in listGlobal)
-            {
-                if (list.Count == n)
-                {
-                    foreach (List<int> subList in list)
-                    {
-                        DataGridViewCell color = (DataGridViewCell)tabla.Rows[subList[1]].Cells[subList[0]];
-                        color.Style.BackColor = System.Drawing.Color.BlueViolet;
-                    }
-                }
-                else
-                {
-                    int r = random.Next(0, 256);
-                    int g = random.Next(0, 256);
-                    int b = random.Next(0, 256);
-                    foreach (List<int> subList in list)
-                    {
-                        DataGridViewCell color = (DataGridViewCell)tabla.Rows[subList[1]].Cells[subList[0]];
-                        color.Style.BackColor = System.Drawing.Color.FromArgb(r, g, b);
-                    }
-
-                }
-            }
-
-        }
+       
     }
 }
