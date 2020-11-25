@@ -114,10 +114,10 @@ namespace ConexionProlog
             // 
             // btnConsult
             // 
-            this.btnConsult.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
-            this.btnConsult.Location = new System.Drawing.Point(16, 370);
+            this.btnConsult.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.btnConsult.Location = new System.Drawing.Point(16, 278);
             this.btnConsult.Name = "btnConsult";
-            this.btnConsult.Size = new System.Drawing.Size(222, 32);
+            this.btnConsult.Size = new System.Drawing.Size(222, 42);
             this.btnConsult.TabIndex = 9;
             this.btnConsult.Text = "Encontrar todos los grupos";
             this.btnConsult.UseVisualStyleBackColor = false;

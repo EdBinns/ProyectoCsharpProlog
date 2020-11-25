@@ -1,1 +1,26 @@
 :- dynamic punto/2.
+punto(0,0).
+punto(1,0).
+punto(1,1).
+punto(1,3).
+punto(0,3).
+punto(1,2).
+punto(5,0).
+punto(5,2).
+punto(5,1).
+punto(6,1).
+punto(6,3).
+punto(5,5).
+punto(6,4).
+punto(6,5).
+punto(4,3).
+punto(3,3).
+punto(3,2).
+punto(2,6).
+punto(3,6).
+punto(4,6).
+punto(4,7).
+punto(3,7).
+punto(2,7).
+punto(0,5).
+punto(1,5).
