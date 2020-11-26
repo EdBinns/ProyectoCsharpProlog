@@ -12,6 +12,8 @@ namespace ConexionProlog
     {
         Boolean flag = false;
         DataTable dataTable = new DataTable();
+        DataTable table = new DataTable();
+        int secondGrid = 0;
         int tamannoMatriz = 0;
         List<List<List<int>>> listGlobal = new List<List<List<int>>>();
         public Principal()
@@ -39,8 +41,14 @@ namespace ConexionProlog
             tabla.AllowUserToResizeRows = false;
             tabla.AllowUserToResizeColumns = false;
             tabla.AllowDrop = false;
+            griedLists.CellClick += listenerrDataGridVie2OnClick;
+            griedLists.ColumnHeadersVisible = false;
+            griedLists.RowHeadersVisible = false;
+            griedLists.AllowUserToAddRows = false;
+            griedLists.AllowUserToResizeRows = false;
+            griedLists.AllowUserToResizeColumns = false;
+            griedLists.AllowDrop = false;
 
-            
 
         }
 
@@ -58,6 +66,9 @@ namespace ConexionProlog
             deleteFile();
             dataTable.Rows.Clear();
             dataTable.Columns.Clear();
+
+            table.Rows.Clear();
+            table.Columns.Clear();
 
             flag = false;
             btnRandom.Enabled = true;
@@ -262,9 +273,15 @@ namespace ConexionProlog
                     dataTable.Rows[i][j] = " ";
                 }
             }
+            deleteFile();
+            table.Clear();
             tabla.DataSource = null;
             tabla.Rows.Clear();
             tabla.DataSource = dataTable;
+
+            griedLists.DataSource = null;
+            griedLists.Rows.Clear();
+            griedLists.DataSource = table;
             foreach (DataGridViewColumn column in tabla.Columns)
             {
                 column.Width = 35;
@@ -296,6 +313,9 @@ namespace ConexionProlog
 
                 ///listString va guardando los grupos en forma de strings para saber/
                 ///si ya se encuentran dentro de listOfGroup
+                String point = "";
+              
+                String totalPoinst = "";
                 List<String> listStrings = new List<String>();
                 for (int i = 0; i < tamannoMatriz; i++)
                 {
@@ -303,12 +323,18 @@ namespace ConexionProlog
                     {
                         if (tabla.Rows[j].Cells[i].Value == "O")
                         {
-                            String group = consultGroup(i.ToString(), j.ToString());
-                            if ((group != null) && (!listStrings.Contains(group)))
+                            point = "[" + i + "," + j + "]";
+                            if (!totalPoinst.Contains(point))
                             {
-                                listStrings.Add(group);
-                                List<List<int>> newgroup = makeAList(group);
-                                listOfGroup.Add(newgroup);
+                          
+                                String group = consultGroup(i.ToString(), j.ToString());
+                                totalPoinst = totalPoinst + " " + group;
+                                if ((group != null) && (!listStrings.Contains(group)))
+                                {
+                                    listStrings.Add(group);
+                                    List<List<int>> newgroup = makeAList(group);
+                                    listOfGroup.Add(newgroup);
+                                }
                             }
                         }
                     }
@@ -326,9 +352,12 @@ namespace ConexionProlog
                         color.Style.BackColor = System.Drawing.Color.FromArgb(r, g, b);
                     }
                 }
+
+   
                 ///Se prepara el mensaje para detectar cuantos grupos hay y sus tamaños
                 List<int> listSize = new List<int>();
-                foreach(List<List<int>> list in listOfGroup)
+                addInGried(listOfGroup);
+                foreach (List<List<int>> list in listOfGroup)
                 {
                     listSize.Add(list.Count);
                 }
@@ -458,6 +487,95 @@ namespace ConexionProlog
             return Convert.ToInt32(stringConsult); ;
         }
 
+
+        private void listenerrDataGridVie2OnClick(object sender, DataGridViewCellEventArgs e)
+        {
+            DataGridViewCell cell = (DataGridViewCell)griedLists.Rows[e.RowIndex].Cells[e.ColumnIndex];
+
+            String value = cell.Value.ToString();
+
+
+            if (!value.Contains("Grupos de"))
+            {
+                List<List<int>> list = makeAList(value);
+
+                Random random = new Random();
+
+                int r = random.Next(0, 256);
+                int g = random.Next(0, 256);
+                int b = random.Next(0, 256);
+                foreach (List<int> subList in list)
+                {
+                    DataGridViewCell color = (DataGridViewCell)tabla.Rows[subList[1]].Cells[subList[0]];
+                    color.Style.BackColor = System.Drawing.Color.FromArgb(r, g, b);
+                    cell.Style.BackColor = System.Drawing.Color.FromArgb(r, g, b);
+                }
+                griedLists.ClearSelection();
+            }
+        }
+
+        private void addInGried(List<List<List<int>>> listOfGroup)
+        {
+
+        
+            List<int> listSize = new List<int>();
+            foreach (List<List<int>> list in listOfGroup)
+            {
+                listSize.Add(list.Count);
+            }
+
+            var agrupar = listSize.GroupBy(i => i);
+
+            int posX = 0;
+            int posY = 0;
+         
+            table.Columns.Add();
+           
+            int subTotal = 0;
+            foreach (var grp in agrupar)
+            {
+                subTotal += 1;
+            }
+            int totalGroups = listOfGroup.Count;
+            secondGrid = (totalGroups + subTotal);
+            for (int i = 0; i < secondGrid; i++)
+            {
+                table.Rows.Add();
+            }
+            foreach (var grp in agrupar)
+            {
+                table.Rows[posX][posY] = "Grupos de " + grp.Key;
+                for(int i = 0; i < totalGroups; i++)
+                {       
+                    List<List<int>> list = listOfGroup[i];
+                    if (posX < secondGrid && list.Count == grp.Key)
+                    { 
+                        posX += 1;
+                        String print = "[";
+                        foreach (List<int> point in list)
+                        {
+                            print = print +",[" + point[0] + "," + point[1] + "]";
+                        }
+                        String newPrint = print.Replace("[,[","[[");
+                        print = newPrint + "]";
+                        table.Rows[posX][posY] = print; 
+                    }     
+                }
+                posX += 1;
+            }
+            griedLists.DataSource = null;
+            griedLists.Rows.Clear();
+            griedLists.DataSource = table;
        
+            foreach (DataGridViewColumn column in griedLists.Columns)
+            {
+                column.Width = 305;
+                break;
+            }
+
+            
+
+        }
+
     }
 }

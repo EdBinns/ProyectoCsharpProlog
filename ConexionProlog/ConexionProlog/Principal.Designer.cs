@@ -38,7 +38,9 @@ namespace ConexionProlog
             this.button2 = new System.Windows.Forms.Button();
             this.clean = new System.Windows.Forms.Button();
             this.btnConsult = new System.Windows.Forms.Button();
+            this.griedLists = new System.Windows.Forms.DataGridView();
             ((System.ComponentModel.ISupportInitialize)(this.tabla)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.griedLists)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
@@ -56,11 +58,11 @@ namespace ConexionProlog
             this.tabla.BackgroundColor = System.Drawing.SystemColors.Control;
             this.tabla.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.tabla.GridColor = System.Drawing.SystemColors.ActiveCaption;
-            this.tabla.Location = new System.Drawing.Point(244, 12);
+            this.tabla.Location = new System.Drawing.Point(259, 12);
             this.tabla.Name = "tabla";
             this.tabla.RowHeadersWidth = 10;
             this.tabla.RowTemplate.Height = 28;
-            this.tabla.Size = new System.Drawing.Size(1239, 749);
+            this.tabla.Size = new System.Drawing.Size(751, 741);
             this.tabla.TabIndex = 1;
             // 
             // label1
@@ -123,11 +125,25 @@ namespace ConexionProlog
             this.btnConsult.UseVisualStyleBackColor = false;
             this.btnConsult.Click += new System.EventHandler(this.btnConsult_Click);
             // 
+            // griedLists
+            // 
+            this.griedLists.AllowUserToAddRows = false;
+            this.griedLists.AllowUserToDeleteRows = false;
+            this.griedLists.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.griedLists.Location = new System.Drawing.Point(1062, 12);
+            this.griedLists.Name = "griedLists";
+            this.griedLists.ReadOnly = true;
+            this.griedLists.RowHeadersWidth = 62;
+            this.griedLists.RowTemplate.Height = 28;
+            this.griedLists.Size = new System.Drawing.Size(462, 732);
+            this.griedLists.TabIndex = 11;
+            // 
             // Principal
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1521, 765);
+            this.ClientSize = new System.Drawing.Size(1710, 765);
+            this.Controls.Add(this.griedLists);
             this.Controls.Add(this.btnConsult);
             this.Controls.Add(this.clean);
             this.Controls.Add(this.button2);
@@ -141,6 +157,7 @@ namespace ConexionProlog
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.Principal_Load);
             ((System.ComponentModel.ISupportInitialize)(this.tabla)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.griedLists)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -156,6 +173,7 @@ namespace ConexionProlog
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button clean;
         private System.Windows.Forms.Button btnConsult;
+        private System.Windows.Forms.DataGridView griedLists;
     }
 }
 
